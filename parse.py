@@ -58,7 +58,7 @@ def array_parse(tokens):
         json_array.append(json)
 
         i = tokens[0]
-        if i == json_syntax[4]:
+        if i == json_syntax[5]:
             return json_array, tokens[1:]
         elif i != json_syntax[1]:
             raise Exception('Expected comma in between array elements')
