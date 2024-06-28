@@ -2,6 +2,9 @@ true_length = len('true')
 false_length = len('false')
 null_length = len('null')
 json_quote = '"'
+# Whitespace characters that should be ignored during lexing.
+json_ignore = ['\b', '\n', '\t', ' ', '\r']
+json_syntax = [':', ',', '{', '}', '[', ']']
 
 def lex_string(string):
     """
@@ -90,7 +93,54 @@ def lex_null(string):
     return None, string
 
 
+def lex(string):
+    # List of tokens
+    array = []
+
+    while len(string):
+        # Lexing a string
+        json_string, string = lex_string(string)
+        if json_string is not None:
+            array.append(json_string)
+            continue
+
+        # Lexing a boolen
+        json_bool, string = lex_true_false(string)
+        if json_bool is not None:
+            array.append(json_bool)
+            continue
+
+        # Lexing a null
+        json_null, string = lex_null(string)
+        if json_null is not None:
+            array.append(None)
+            continue
+
+        # Lexing a number
+        json_number, string = lex_number(string)
+        if json_number is not None:
+            array.append(json_number)
+            continue
+
+        """
+        Find whitespace characters and skip them
+        Check for syntax charcaters and add them as tokens to the array
+        """
+        s = string[0]
+        if s in json_ignore:
+            string = string[1:]
+        elif s in json_syntax:
+            array.append(s)
+            string = string[1:]
+        # Raise an exception for unexpected characters
+        else:
+            raise Exception('Unexpected character: {}'.format(string[0]))
+        
+    return array
+
+
 print(lex_string("hello"))
 print(lex_number("-123.45abc"))
 print(lex_true_false("trueabc"))
 print(lex_null("nullxyz"))
+print(lex('{"foo": [1, 2, {"bar": 2}]}'))
