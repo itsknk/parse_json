@@ -4,7 +4,7 @@ A simple json parser written in python.
 
 ### Overview
 
-This project provides a simple JSON parser implemented in Python. It includes functionality to parse a JSON-like string into a Python object and convert a Python object back into a JSON-like string. The parser uses a separate lexer and parser for a modular and maintainable codebase.
+This project provides a simple JSON parser implemented in Python. It includes functionality to parse a JSON-like string into a Python object and convert a Python object back into a JSON-like string.
 
 ### Directory Structure
 
