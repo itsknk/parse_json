@@ -1,4 +1,4 @@
-from helper import *
+from .helper import *
 
 # Parse a json object into a python dictionary.
 """
@@ -72,8 +72,11 @@ def array_parse(tokens):
 If the first token is a left bracket then call the array_parse function
 Else if it is a left brace then call the objects_parse function
 """
-def parse(tokens):
+def parse(tokens, is_root=False):
     i = tokens[0]
+
+    if is_root and i!= json_syntax[2]:
+        raise Exception('Root must be an object')
 
     if i == json_syntax[4]:
         return array_parse(tokens[1:])
@@ -82,7 +85,3 @@ def parse(tokens):
     else:
         return i, tokens[1:]
     
-
-tokens = ['{', 'foo', ':', '[', '1', ',', '2', ',', '{', 'bar', ':', '2', '}', ']', '}']
-parsed_tokens = parse(tokens)
-print(parsed_tokens)
