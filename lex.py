@@ -1,4 +1,4 @@
-from helper import *
+from .helper import *
 
 def lex_string(string):
     """
@@ -131,10 +131,3 @@ def lex(string):
             raise Exception('Unexpected character: {}'.format(string[0]))
         
     return array
-
-
-print(lex_string("hello"))
-print(lex_number("-123.45abc"))
-print(lex_true_false("trueabc"))
-print(lex_null("nullxyz"))
-print(lex('{"foo": [1, 2, {"bar": 2}]}'))
